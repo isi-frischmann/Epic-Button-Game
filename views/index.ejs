@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>First Page</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/socket.io/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script>
+        
+        var socket = io();
+
+        $('document').ready(function(){
+
+            // when the button is clicked send the data to the server
+            $('#addOne').click(function(){
+                socket.emit('theCount');
+                // socket.on('count');
+            })
+
+            // get the data back from the server
+            socket.on('addedCount', function(count){
+                $('#x').html(count);
+                // console.log(count.count);
+            });
+
+            // when the reset button is clicked.
+            $('#reset').click(function(){
+                // send the data to the server
+                socket.emit('delete');
+                // get the data back from the server
+                socket.on('updated', function(count){
+                    $('#x').html(count);
+                })
+            })
+
+    
+        });
+
+    </script>
+</head>
+<body>
+    <center><h1>The button has been pushed: <span id="x"></span></h1></center>
+
+    <center><p>Push the button to update the count</p></center>
+    <center><button type"submit" id="addOne">Push the epic button</button></center>
+
+    <center><p>Push the button to reset</p></center>
+    <center><button type"submit" id="reset">Reset</button></center>
+    
+</body>
+</html>
